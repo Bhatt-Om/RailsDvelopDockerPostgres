@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+  web:
+    build:
+      context: .
+    image: demo_doc_postgres
+    ports:
+      - "3000:3000"
+    volumes:
+      - ".:/app"
+    depends_on:
+      - db
+    environment:
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: password
